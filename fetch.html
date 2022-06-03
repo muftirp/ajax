@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Fetch</title>
+</head>
+<body>
+    <h1>Latihan AJAX Fetch</h1>
+
+    <button type="button" onclick="ambilData()" id="ambildata">Ambil Data</button>
+
+    <div id="hasil">
+    </div>
+
+    <script>
+        function ambilDataCopilot() {
+            const url = "https://pokeapi.co/api/v2/pokemon?limit=10";
+            fetch(url)
+                .then(response => response.json())
+                .then(response => {
+                    // console.log(response);
+                    const results = response.results;
+                    // console.log(data);
+
+                    let data = "";
+                    // looping sepanjang array data
+                    for (let i = 0; i < results.length; i++) {
+                        // ambil nama pokemon   
+                        data += `<p>${results[i].name}</p>`;
+                    }
+                    // tampilkan data ke dalam div
+                    document.getElementById("hasil").innerHTML = data;
+                })
+                .catch(error => console.log(error));
+        }
+
+        async function ambilData(){
+            const url = await fetch("https://pokeapi.co/api/v2/pokemon?limit=10", {
+                method : "GET"
+            })
+
+            const json = await url.json();
+            const results = json.results;
+
+            let data = "";
+            // looping sepanjang array data
+            for (let i = 0; i < results.length; i++) {
+                // ambil nama pokemon   
+                data += `<p>${results[i].name}</p>`;
+            }
+
+            document.getElementById("hasil").innerHTML = data;
+        }
+    </script>
+    
+</body>
+</html>
